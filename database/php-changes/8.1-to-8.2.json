@@ -1,0 +1,72 @@
+{
+  "version_from": "8.1",
+  "version_to": "8.2",
+  "removed_functions": [],
+  "deprecated_features": [
+    {
+      "title": "Dynamic properties deprecated",
+      "description": "Creating dynamic properties on objects is deprecated unless the class uses the #[AllowDynamicProperties] attribute",
+      "severity": "high",
+      "regex": "\\$this->\\w+\\s*=(?!.*\\bpublic\\b|\\bprivate\\b|\\bprotected\\b)",
+      "replacement": "Declare all properties in the class or use #[AllowDynamicProperties] attribute",
+      "recommendation": "Declare all class properties explicitly"
+    },
+    {
+      "title": "${} string interpolation deprecated",
+      "description": "Using ${var} and ${expr} string interpolation is deprecated",
+      "severity": "medium",
+      "regex": "\\$\\{[^}]+\\}",
+      "replacement": "Use {$var} or {${expr}} syntax instead",
+      "example_old": "\"${var}\"",
+      "example_new": "\"{$var}\""
+    },
+    {
+      "title": "utf8_encode() and utf8_decode() deprecated",
+      "description": "These functions are deprecated",
+      "severity": "medium",
+      "regex": "\\butf8_encode\\s*\\(|\\butf8_decode\\s*\\(",
+      "replacement": "Use mb_convert_encoding() or similar",
+      "example_old": "utf8_encode($str)",
+      "example_new": "mb_convert_encoding($str, 'UTF-8', 'ISO-8859-1')"
+    }
+  ],
+  "behavior_changes": [
+    {
+      "title": "Locale-insensitive strtolower() and strtoupper()",
+      "description": "These functions are no longer locale-dependent",
+      "severity": "low",
+      "recommendation": "Use mb_strtolower()/mb_strtoupper() for locale-aware conversion"
+    },
+    {
+      "title": "get_class() and get_parent_class() without arguments",
+      "description": "These now return the class name from the current scope",
+      "severity": "low"
+    }
+  ],
+  "new_features": [
+    {
+      "title": "Readonly classes",
+      "description": "Entire classes can now be marked as readonly"
+    },
+    {
+      "title": "Disjunctive Normal Form (DNF) types",
+      "description": "Complex type combinations using union and intersection are now supported"
+    },
+    {
+      "title": "null, false, and true as standalone types",
+      "description": "These can now be used as standalone types"
+    },
+    {
+      "title": "New \"random\" extension",
+      "description": "A new object-oriented API for random number generation"
+    },
+    {
+      "title": "Constants in traits",
+      "description": "Traits can now define constants"
+    },
+    {
+      "title": "Deprecate passing null to non-nullable parameters",
+      "description": "This is now deprecated for internal and user-defined functions"
+    }
+  ]
+}

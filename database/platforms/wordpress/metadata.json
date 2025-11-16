@@ -1,0 +1,26 @@
+{
+  "platform": "wordpress",
+  "name": "WordPress",
+  "description": "WordPress Content Management System",
+  "website": "https://wordpress.org",
+  "detection": {
+    "files": ["wp-config.php", "wp-load.php", "wp-config-sample.php"],
+    "patterns": ["WP_VERSION", "ABSPATH", "wp_version"]
+  },
+  "core_paths": [
+    "wp-admin/",
+    "wp-includes/",
+    "wp-content/languages/",
+    "wp-content/uploads/"
+  ],
+  "custom_paths": [
+    "wp-content/plugins/",
+    "wp-content/themes/",
+    "wp-content/mu-plugins/"
+  ],
+  "plugin_types": {
+    "plugins": "Plugins",
+    "themes": "Themes",
+    "mu-plugins": "Must-use plugins"
+  }
+}

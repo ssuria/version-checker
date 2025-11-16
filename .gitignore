@@ -1,0 +1,35 @@
+# Vendor
+/vendor/
+
+# Composer
+composer.lock
+composer.phar
+
+# Storage
+/storage/scans/*
+/storage/cache/*
+/storage/logs/*
+!storage/scans/.gitkeep
+!storage/cache/.gitkeep
+!storage/logs/.gitkeep
+
+# Config
+/config/config.php
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+*.tmp
+*.temp
+
+# Reports (optional, uncomment if you don't want to commit reports)
+# /reports/

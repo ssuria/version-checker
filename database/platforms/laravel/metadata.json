@@ -1,0 +1,12 @@
+{
+  "platform": "laravel",
+  "name": "Laravel",
+  "description": "Laravel PHP Framework",
+  "website": "https://laravel.com",
+  "detection": {
+    "files": ["artisan", "composer.json"],
+    "patterns": ["laravel/framework"]
+  },
+  "core_paths": ["vendor/laravel/"],
+  "custom_paths": ["app/", "routes/", "resources/"]
+}

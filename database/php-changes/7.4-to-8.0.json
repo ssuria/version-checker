@@ -1,0 +1,161 @@
+{
+  "version_from": "7.4",
+  "version_to": "8.0",
+  "removed_functions": [
+    {
+      "function": "each",
+      "severity": "critical",
+      "description": "Removed in PHP 8.0. This function was deprecated in PHP 7.2",
+      "replacement": "Use foreach loop or current()/next() combination",
+      "example_old": "while (list($key, $val) = each($array)) { ... }",
+      "example_new": "foreach ($array as $key => $val) { ... }",
+      "regex": "\\beach\\s*\\("
+    },
+    {
+      "function": "create_function",
+      "severity": "critical",
+      "description": "Removed in PHP 8.0. This function was deprecated in PHP 7.2",
+      "replacement": "Use anonymous functions (closures) instead",
+      "example_old": "$func = create_function('$a,$b', 'return $a + $b;');",
+      "example_new": "$func = function($a, $b) { return $a + $b; };",
+      "regex": "\\bcreate_function\\s*\\("
+    },
+    {
+      "function": "__autoload",
+      "severity": "critical",
+      "description": "__autoload() has been removed. Use spl_autoload_register() instead",
+      "replacement": "Use spl_autoload_register()",
+      "example_old": "function __autoload($class) { ... }",
+      "example_new": "spl_autoload_register(function($class) { ... });",
+      "regex": "function\\s+__autoload\\s*\\("
+    },
+    {
+      "function": "money_format",
+      "severity": "high",
+      "description": "money_format() has been removed",
+      "replacement": "Use NumberFormatter::formatCurrency() instead",
+      "example_old": "money_format('%.2n', $number)",
+      "example_new": "$fmt = new NumberFormatter('en_US', NumberFormatter::CURRENCY); $fmt->formatCurrency($number, 'USD');",
+      "regex": "\\bmoney_format\\s*\\("
+    },
+    {
+      "function": "ezmlm_hash",
+      "severity": "medium",
+      "description": "ezmlm_hash() has been removed",
+      "replacement": "Implement custom hashing if needed",
+      "regex": "\\bezmlm_hash\\s*\\("
+    },
+    {
+      "function": "restore_include_path",
+      "severity": "medium",
+      "description": "restore_include_path() has been removed",
+      "replacement": "Use ini_restore('include_path')",
+      "example_old": "restore_include_path();",
+      "example_new": "ini_restore('include_path');",
+      "regex": "\\brestore_include_path\\s*\\("
+    }
+  ],
+  "deprecated_features": [
+    {
+      "title": "Required parameters after optional parameters deprecated",
+      "description": "Declaring a required parameter after an optional parameter is deprecated",
+      "severity": "high",
+      "regex": "function\\s+\\w+\\s*\\([^)]*=\\s*[^,)]*,[^)]*\\$\\w+(?!\\s*=)[^)]*\\)",
+      "replacement": "Make all parameters after optional ones also optional",
+      "recommendation": "Review function signatures for parameter order"
+    }
+  ],
+  "behavior_changes": [
+    {
+      "title": "String to number comparisons",
+      "description": "Non-strict comparisons between numbers and non-numeric strings now use number comparison semantics",
+      "severity": "high",
+      "regex": "==|!=|<>|>|>=|<|<=",
+      "recommendation": "Review string/number comparisons and use strict comparison (===) where appropriate"
+    },
+    {
+      "title": "Reflection export() methods removed",
+      "description": "All Reflection export() methods have been removed",
+      "severity": "critical",
+      "regex": "Reflection\\w+::export\\s*\\(",
+      "replacement": "Use __toString() or cast to string",
+      "example_old": "ReflectionClass::export('ClassName');",
+      "example_new": "echo new ReflectionClass('ClassName');"
+    },
+    {
+      "title": "@ operator no longer suppresses fatal errors",
+      "description": "The @ error suppression operator will no longer silence fatal errors",
+      "severity": "high",
+      "regex": "@\\s*\\w+\\s*\\(",
+      "recommendation": "Don't rely on @ to suppress fatal errors"
+    },
+    {
+      "title": "Default error reporting level changed",
+      "description": "Default error_reporting level is now E_ALL instead of E_ALL & ~E_NOTICE",
+      "severity": "medium",
+      "recommendation": "Fix all notices in your code"
+    },
+    {
+      "title": "Concatenation precedence",
+      "description": "The concatenation operator . now has lower precedence than + and -",
+      "severity": "medium",
+      "regex": "[+-].*\\.",
+      "recommendation": "Use parentheses to make precedence explicit"
+    },
+    {
+      "title": "Namespaced names are now treated as single token",
+      "description": "Namespace names can no longer contain whitespace",
+      "severity": "low"
+    },
+    {
+      "title": "array_merge() and array_merge_recursive() return type",
+      "description": "These functions now return empty array when no arguments are passed",
+      "severity": "low",
+      "recommendation": "Ensure at least one argument is passed"
+    },
+    {
+      "title": "get_defined_functions() returns different format",
+      "description": "get_defined_functions() now returns named keys for user and internal functions",
+      "severity": "low",
+      "recommendation": "Update code that depends on numeric indices"
+    }
+  ],
+  "new_features": [
+    {
+      "title": "Named arguments",
+      "description": "Functions can now be called using named arguments"
+    },
+    {
+      "title": "Attributes",
+      "description": "Attributes (also known as annotations) are now natively supported"
+    },
+    {
+      "title": "Constructor property promotion",
+      "description": "Class constructor arguments can be promoted to properties"
+    },
+    {
+      "title": "Union types",
+      "description": "Parameter and return types can now be declared as union types"
+    },
+    {
+      "title": "Match expression",
+      "description": "match is a new expression similar to switch but with stricter comparison"
+    },
+    {
+      "title": "Nullsafe operator",
+      "description": "The ?-> operator can be used for null-safe property/method access"
+    },
+    {
+      "title": "str_contains(), str_starts_with(), str_ends_with()",
+      "description": "New string functions for common operations"
+    },
+    {
+      "title": "fdiv() function",
+      "description": "New function for floating-point division"
+    },
+    {
+      "title": "get_debug_type() function",
+      "description": "New function to get variable type for debugging"
+    }
+  ]
+}

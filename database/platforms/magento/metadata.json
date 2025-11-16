@@ -1,0 +1,18 @@
+{
+  "platform": "magento",
+  "name": "Magento / OpenMage",
+  "description": "Magento eCommerce Platform and OpenMage Fork",
+  "website": "https://www.openmage.org",
+  "detection": {
+    "files": ["app/Mage.php", "composer.json"],
+    "patterns": ["Mage::getVersion", "magento/product", "openmage"]
+  },
+  "core_paths": [
+    "app/code/core/",
+    "lib/"
+  ],
+  "custom_paths": [
+    "app/code/local/",
+    "app/code/community/"
+  ]
+}

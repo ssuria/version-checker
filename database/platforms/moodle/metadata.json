@@ -1,0 +1,58 @@
+{
+  "platform": "moodle",
+  "name": "Moodle",
+  "description": "Moodle Learning Management System",
+  "website": "https://moodle.org",
+  "detection": {
+    "files": ["version.php", "config-dist.php"],
+    "patterns": ["$CFG->version", "moodle"]
+  },
+  "core_paths": [
+    "lib/",
+    "admin/",
+    "course/",
+    "user/",
+    "enrol/",
+    "grade/",
+    "question/",
+    "backup/",
+    "cohort/",
+    "competency/",
+    "files/",
+    "group/",
+    "message/",
+    "notes/",
+    "rating/",
+    "repository/",
+    "rss/",
+    "search/",
+    "tag/",
+    "webservice/"
+  ],
+  "custom_paths": [
+    "local/",
+    "mod/",
+    "blocks/",
+    "theme/",
+    "report/",
+    "auth/",
+    "filter/",
+    "enrol/",
+    "assignsubmission/",
+    "assignfeedback/",
+    "availability/",
+    "plagiarism/"
+  ],
+  "plugin_types": {
+    "local": "Local plugins",
+    "mod": "Activity modules",
+    "blocks": "Blocks",
+    "theme": "Themes",
+    "report": "Reports",
+    "auth": "Authentication plugins",
+    "filter": "Filters",
+    "enrol": "Enrolment plugins",
+    "assignsubmission": "Assignment submission plugins",
+    "assignfeedback": "Assignment feedback plugins"
+  }
+}

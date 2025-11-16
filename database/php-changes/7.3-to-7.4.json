@@ -1,0 +1,74 @@
+{
+  "version_from": "7.3",
+  "version_to": "7.4",
+  "removed_functions": [],
+  "deprecated_features": [
+    {
+      "title": "Array and string offset access using curly braces deprecated",
+      "description": "Using curly braces for array and string offset access is deprecated. Use square brackets instead",
+      "severity": "high",
+      "regex": "\\$\\w+\\{[^}]+\\}",
+      "replacement": "Use square brackets: $array[index]",
+      "example_old": "$array{0}",
+      "example_new": "$array[0]"
+    },
+    {
+      "title": "Real type deprecated",
+      "description": "The (real) cast and is_real() function are deprecated",
+      "severity": "medium",
+      "regex": "\\(real\\)|\\bis_real\\s*\\(",
+      "replacement": "Use (float) cast or is_float()",
+      "example_old": "(real) $value",
+      "example_new": "(float) $value"
+    },
+    {
+      "title": "Unbinding $this from non-static closures deprecated",
+      "description": "Unbinding $this from non-static closures that use $this is deprecated",
+      "severity": "medium",
+      "regex": "->bindTo\\s*\\(\\s*null",
+      "recommendation": "Make the closure static or keep $this binding"
+    },
+    {
+      "title": "parent keyword without parent class deprecated",
+      "description": "Using parent:: without a parent class is deprecated",
+      "severity": "high",
+      "regex": "parent::",
+      "recommendation": "Ensure class has a parent before using parent::"
+    },
+    {
+      "title": "Implode with parameters in wrong order deprecated",
+      "description": "Calling implode() with parameters in the wrong order is deprecated",
+      "severity": "medium",
+      "regex": "implode\\s*\\(\\s*\\$",
+      "replacement": "Use implode($separator, $array) order",
+      "example_old": "implode($array, ',')",
+      "example_new": "implode(',', $array)"
+    }
+  ],
+  "behavior_changes": [
+    {
+      "title": "Numeric string behavior change",
+      "description": "Numeric strings are now handled more consistently",
+      "severity": "low",
+      "recommendation": "Review numeric string comparisons"
+    }
+  ],
+  "new_features": [
+    {
+      "title": "Typed properties",
+      "description": "Class properties now support type declarations"
+    },
+    {
+      "title": "Arrow functions",
+      "description": "Short closures using fn() syntax are now available"
+    },
+    {
+      "title": "Null coalescing assignment operator",
+      "description": "The ??= operator is now available"
+    },
+    {
+      "title": "Spread operator in array expressions",
+      "description": "The spread operator ... can now be used in array expressions"
+    }
+  ]
+}

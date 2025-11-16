@@ -1,0 +1,23 @@
+{
+  "functions": [
+    {
+      "function": "Tools::getValue",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "Always sanitize Tools::getValue() output",
+      "severity": "high",
+      "regex": "Tools::getValue\\s*\\(",
+      "recommendation": "Use with proper validation and sanitization"
+    },
+    {
+      "function": "Db::getInstance()->Execute",
+      "deprecated_since": "1.5",
+      "removed_in": null,
+      "replacement": "Db::getInstance()->execute()",
+      "severity": "medium",
+      "regex": "->Execute\\s*\\(",
+      "example_old": "$db->Execute($sql)",
+      "example_new": "$db->execute($sql)"
+    }
+  ]
+}

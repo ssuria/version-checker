@@ -1,0 +1,40 @@
+{
+  "version_from": "7.2",
+  "version_to": "7.3",
+  "removed_functions": [],
+  "deprecated_features": [
+    {
+      "title": "Undocumented mbstring function aliases deprecated",
+      "description": "Some undocumented mbstring function aliases have been deprecated",
+      "severity": "low",
+      "regex": "\\bmbereg\\s*\\(|\\bmberegi\\s*\\(|\\bmbregex_encoding\\s*\\(|\\bmb_ereg_match\\s*\\(",
+      "replacement": "Use documented mb_* functions"
+    },
+    {
+      "title": "Case-insensitive constants deprecated",
+      "description": "Declaring case-insensitive constants with define() is deprecated",
+      "severity": "medium",
+      "regex": "define\\s*\\([^,]+,\\s*[^,]+,\\s*true\\s*\\)",
+      "replacement": "Use case-sensitive constants"
+    }
+  ],
+  "behavior_changes": [
+    {
+      "title": "Array destructuring behavior change",
+      "description": "Array destructuring now starts from the left side instead of right",
+      "severity": "medium",
+      "regex": "list\\s*\\([^)]*\\)\\s*=",
+      "recommendation": "Review array destructuring assignments"
+    }
+  ],
+  "new_features": [
+    {
+      "title": "Flexible Heredoc and Nowdoc syntax",
+      "description": "Heredoc and nowdoc closing markers no longer need to be followed by a semicolon or newline"
+    },
+    {
+      "title": "Array destructuring supports reference assignments",
+      "description": "Array destructuring now supports reference assignments using the & operator"
+    }
+  ]
+}

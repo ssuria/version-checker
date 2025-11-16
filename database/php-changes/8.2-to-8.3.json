@@ -1,0 +1,74 @@
+{
+  "version_from": "8.2",
+  "version_to": "8.3",
+  "removed_functions": [],
+  "deprecated_features": [
+    {
+      "title": "MT_RAND_PHP mode deprecated",
+      "description": "Using MT_RAND_PHP as the second parameter to mt_srand() is deprecated",
+      "severity": "low",
+      "regex": "mt_srand\\s*\\([^,]*,\\s*MT_RAND_PHP",
+      "replacement": "Remove the second parameter or use MT_RAND_MT19937"
+    },
+    {
+      "title": "ReflectionProperty::setValue() with 1 argument",
+      "description": "Calling ReflectionProperty::setValue() with only one argument is deprecated",
+      "severity": "medium",
+      "regex": "->setValue\\s*\\(\\s*[^,)]+\\s*\\)",
+      "replacement": "Pass both object and value"
+    }
+  ],
+  "behavior_changes": [
+    {
+      "title": "More appropriate Date/Time exceptions",
+      "description": "Date/Time extension now throws specific exceptions instead of generic Exception",
+      "severity": "low",
+      "recommendation": "Update exception handling for Date/Time operations"
+    },
+    {
+      "title": "Negative array indices in unset()",
+      "description": "Unsetting negative array indices no longer affects other indices",
+      "severity": "low"
+    },
+    {
+      "title": "Iterating over non-countable objects",
+      "description": "Calling reset(), end(), next(), prev() on non-arrays now generates warnings",
+      "severity": "low",
+      "recommendation": "Only use these functions with actual arrays"
+    }
+  ],
+  "new_features": [
+    {
+      "title": "Typed class constants",
+      "description": "Class, interface, trait, and enum constants now support type declarations"
+    },
+    {
+      "title": "#[Override] attribute",
+      "description": "New attribute to mark methods that override parent methods"
+    },
+    {
+      "title": "Negative array indices in $$n variables",
+      "description": "Negative indices now work correctly with variable variables"
+    },
+    {
+      "title": "json_validate() function",
+      "description": "New function to validate JSON without decoding"
+    },
+    {
+      "title": "Randomizer::getBytesFromString() method",
+      "description": "New method for generating random strings"
+    },
+    {
+      "title": "Randomizer::getFloat() and nextFloat()",
+      "description": "New methods for generating random floats"
+    },
+    {
+      "title": "Command-line argument parsing improvements",
+      "description": "Improved support for long option names in CLI"
+    },
+    {
+      "title": "readonly amendments",
+      "description": "Readonly properties can now be reinitialized during cloning"
+    }
+  ]
+}

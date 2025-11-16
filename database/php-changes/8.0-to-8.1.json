@@ -1,0 +1,96 @@
+{
+  "version_from": "8.0",
+  "version_to": "8.1",
+  "removed_functions": [],
+  "deprecated_features": [
+    {
+      "title": "Passing null to non-nullable internal function parameters deprecated",
+      "description": "Passing null to non-nullable parameters of internal functions is deprecated",
+      "severity": "high",
+      "regex": "\\(\\s*null\\s*\\)",
+      "replacement": "Pass appropriate non-null values or make parameters nullable",
+      "recommendation": "Review all function calls passing null and ensure types are correct"
+    },
+    {
+      "title": "Serializable interface deprecated",
+      "description": "The Serializable interface is deprecated in favor of __serialize() and __unserialize()",
+      "severity": "medium",
+      "regex": "implements\\s+[^{]*Serializable",
+      "replacement": "Use __serialize() and __unserialize() magic methods",
+      "example_old": "class Foo implements Serializable { ... }",
+      "example_new": "class Foo { public function __serialize() { ... } public function __unserialize(array $data) { ... } }"
+    },
+    {
+      "title": "Calling static methods non-statically deprecated",
+      "description": "Calling a static method on a non-static method is deprecated",
+      "severity": "medium",
+      "recommendation": "Call static methods using :: syntax"
+    },
+    {
+      "title": "html_entity_decode() default encoding deprecated",
+      "description": "Not passing an encoding to html_entity_decode() is deprecated",
+      "severity": "low",
+      "regex": "html_entity_decode\\s*\\([^,)]+\\)",
+      "replacement": "Explicitly specify the encoding parameter"
+    }
+  ],
+  "behavior_changes": [
+    {
+      "title": "Octal number notation",
+      "description": "Octal numbers can now be written using 0o or 0O prefix",
+      "severity": "info",
+      "recommendation": "Be aware of new octal notation when reading code"
+    },
+    {
+      "title": "Float to int conversion",
+      "description": "When a float is converted to int, it is now always properly rounded",
+      "severity": "low",
+      "recommendation": "Review float to int conversions"
+    },
+    {
+      "title": "$GLOBALS variable restrictions",
+      "description": "$GLOBALS is now a read-only copy of the global variable table",
+      "severity": "medium",
+      "regex": "\\$GLOBALS\\[[^]]+\\]\\s*=",
+      "recommendation": "Don't modify $GLOBALS, use global keyword instead"
+    }
+  ],
+  "new_features": [
+    {
+      "title": "Enumerations",
+      "description": "Native enum support has been added to PHP"
+    },
+    {
+      "title": "Readonly properties",
+      "description": "Class properties can now be marked as readonly"
+    },
+    {
+      "title": "First-class callable syntax",
+      "description": "Closures can be created from callables using the ... syntax"
+    },
+    {
+      "title": "Pure intersection types",
+      "description": "Type intersections can now be declared"
+    },
+    {
+      "title": "never return type",
+      "description": "Functions that always throw or exit can use the never type"
+    },
+    {
+      "title": "final class constants",
+      "description": "Class constants can now be marked as final"
+    },
+    {
+      "title": "Fibers",
+      "description": "Support for Fibers has been added for easier async programming"
+    },
+    {
+      "title": "array_is_list() function",
+      "description": "New function to check if an array is a list"
+    },
+    {
+      "title": "fsync() and fdatasync() functions",
+      "description": "New functions for file synchronization"
+    }
+  ]
+}

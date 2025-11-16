@@ -1,0 +1,12 @@
+{
+  "platform": "symfony",
+  "name": "Symfony",
+  "description": "Symfony PHP Framework",
+  "website": "https://symfony.com",
+  "detection": {
+    "files": ["composer.json", "symfony.lock"],
+    "patterns": ["symfony/framework-bundle"]
+  },
+  "core_paths": ["vendor/symfony/"],
+  "custom_paths": ["src/", "config/"]
+}
