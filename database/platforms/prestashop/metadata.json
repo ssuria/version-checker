@@ -1,0 +1,12 @@
+{
+  "platform": "prestashop",
+  "name": "PrestaShop",
+  "description": "PrestaShop eCommerce Platform",
+  "website": "https://www.prestashop.com",
+  "detection": {
+    "files": ["config/config.inc.php", "index.php"],
+    "patterns": ["_PS_VERSION_", "PrestaShop"]
+  },
+  "core_paths": ["classes/", "controllers/", "admin/"],
+  "custom_paths": ["modules/", "themes/", "override/"]
+}

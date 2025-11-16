@@ -1,0 +1,188 @@
+{
+  "functions": [
+    {
+      "function": "create_function",
+      "deprecated_since": "7.2",
+      "removed_in": "8.0",
+      "replacement": "Use anonymous functions",
+      "severity": "critical",
+      "regex": "create_function\\s*\\(",
+      "example_old": "$fn = create_function('$a,$b', 'return $a+$b;');",
+      "example_new": "$fn = function($a, $b) { return $a + $b; };"
+    },
+    {
+      "function": "get_settings",
+      "deprecated_since": "2.1",
+      "removed_in": null,
+      "replacement": "get_option()",
+      "severity": "high",
+      "regex": "get_settings\\s*\\(",
+      "example_old": "$value = get_settings('option_name');",
+      "example_new": "$value = get_option('option_name');"
+    },
+    {
+      "function": "wp_get_http",
+      "deprecated_since": "2.7",
+      "removed_in": null,
+      "replacement": "wp_remote_get()",
+      "severity": "high",
+      "regex": "wp_get_http\\s*\\(",
+      "example_old": "$response = wp_get_http($url);",
+      "example_new": "$response = wp_remote_get($url);"
+    },
+    {
+      "function": "get_posts",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "get_posts() with proper parameters",
+      "severity": "low",
+      "recommendation": "Use WP_Query for complex queries"
+    },
+    {
+      "function": "query_posts",
+      "deprecated_since": "3.1",
+      "removed_in": null,
+      "replacement": "WP_Query or pre_get_posts action",
+      "severity": "high",
+      "regex": "query_posts\\s*\\(",
+      "example_old": "query_posts('cat=5');",
+      "example_new": "$query = new WP_Query(array('cat' => 5));"
+    },
+    {
+      "function": "wp_specialchars",
+      "deprecated_since": "2.8",
+      "removed_in": null,
+      "replacement": "esc_html()",
+      "severity": "high",
+      "regex": "wp_specialchars\\s*\\(",
+      "example_old": "echo wp_specialchars($text);",
+      "example_new": "echo esc_html($text);"
+    },
+    {
+      "function": "attribute_escape",
+      "deprecated_since": "2.8",
+      "removed_in": null,
+      "replacement": "esc_attr()",
+      "severity": "high",
+      "regex": "attribute_escape\\s*\\(",
+      "example_old": "echo attribute_escape($value);",
+      "example_new": "echo esc_attr($value);"
+    },
+    {
+      "function": "wp_filter_post_kses",
+      "deprecated_since": "2.9",
+      "removed_in": null,
+      "replacement": "wp_kses_post()",
+      "severity": "medium",
+      "regex": "wp_filter_post_kses\\s*\\("
+    },
+    {
+      "function": "sanitize_url",
+      "deprecated_since": "2.8",
+      "removed_in": null,
+      "replacement": "esc_url_raw()",
+      "severity": "high",
+      "regex": "sanitize_url\\s*\\(",
+      "example_old": "$url = sanitize_url($url);",
+      "example_new": "$url = esc_url_raw($url);"
+    },
+    {
+      "function": "clean_url",
+      "deprecated_since": "3.0",
+      "removed_in": null,
+      "replacement": "esc_url()",
+      "severity": "high",
+      "regex": "clean_url\\s*\\(",
+      "example_old": "echo clean_url($url);",
+      "example_new": "echo esc_url($url);"
+    },
+    {
+      "function": "js_escape",
+      "deprecated_since": "2.8",
+      "removed_in": null,
+      "replacement": "esc_js()",
+      "severity": "high",
+      "regex": "js_escape\\s*\\(",
+      "example_old": "var data = '<?php echo js_escape($data); ?>';",
+      "example_new": "var data = '<?php echo esc_js($data); ?>';"
+    },
+    {
+      "function": "wp_specialchars_decode",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "Use with caution",
+      "severity": "low",
+      "recommendation": "Consider if you really need to decode HTML entities"
+    },
+    {
+      "function": "like_escape",
+      "deprecated_since": "4.0",
+      "removed_in": null,
+      "replacement": "$wpdb->esc_like()",
+      "severity": "high",
+      "regex": "like_escape\\s*\\(",
+      "example_old": "$like = like_escape($term);",
+      "example_new": "$like = $wpdb->esc_like($term);"
+    },
+    {
+      "function": "get_bloginfo",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "get_bloginfo() with proper escaping",
+      "severity": "low",
+      "recommendation": "Escape output: esc_url(get_bloginfo('url'))"
+    },
+    {
+      "function": "the_author",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "the_author() with consideration for get_the_author()",
+      "severity": "info",
+      "recommendation": "Use get_the_author() for retrieving without echoing"
+    },
+    {
+      "function": "wpdb::escape",
+      "deprecated_since": "3.6",
+      "removed_in": null,
+      "replacement": "$wpdb->prepare() or esc_sql()",
+      "severity": "critical",
+      "regex": "\\$wpdb->escape\\s*\\(",
+      "example_old": "$safe = $wpdb->escape($value);",
+      "example_new": "$wpdb->prepare('SELECT * FROM table WHERE column = %s', $value);"
+    },
+    {
+      "function": "get_currentuserinfo",
+      "deprecated_since": "4.5",
+      "removed_in": null,
+      "replacement": "wp_get_current_user()",
+      "severity": "high",
+      "regex": "get_currentuserinfo\\s*\\(",
+      "example_old": "global $current_user; get_currentuserinfo();",
+      "example_new": "$current_user = wp_get_current_user();"
+    },
+    {
+      "function": "get_userdatabylogin",
+      "deprecated_since": "3.3",
+      "removed_in": null,
+      "replacement": "get_user_by('login', $login)",
+      "severity": "high",
+      "regex": "get_userdatabylogin\\s*\\("
+    },
+    {
+      "function": "get_user_meta",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "get_user_meta() with proper usage",
+      "severity": "info",
+      "recommendation": "Remember to pass the 'single' parameter correctly"
+    },
+    {
+      "function": "screen_icon",
+      "deprecated_since": "3.8",
+      "removed_in": null,
+      "replacement": "Remove, icons are automatic now",
+      "severity": "low",
+      "regex": "screen_icon\\s*\\("
+    }
+  ]
+}

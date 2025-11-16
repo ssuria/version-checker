@@ -1,0 +1,166 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * PHP Migration Analyzer CLI
+ *
+ * Command-line interface for analyzing PHP code migration compatibility
+ */
+
+// Autoload
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require __DIR__ . '/../vendor/autoload.php';
+} else {
+    echo "Error: Composer dependencies not installed. Run 'composer install' first.\n";
+    exit(1);
+}
+
+use PhpMigrationAnalyzer\Core\Application;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\SingleCommandApplication;
+
+(new SingleCommandApplication())
+    ->setName('PHP Migration Analyzer')
+    ->setVersion('1.0.0')
+    ->addArgument('path', InputArgument::REQUIRED, 'Path to analyze')
+    ->addOption('platform', 'p', InputOption::VALUE_REQUIRED, 'Platform type (moodle, wordpress, magento, prestashop, symfony, laravel, generic)', 'generic')
+    ->addOption('current-platform', null, InputOption::VALUE_REQUIRED, 'Current platform version')
+    ->addOption('target-platform', null, InputOption::VALUE_REQUIRED, 'Target platform version')
+    ->addOption('current-php', null, InputOption::VALUE_REQUIRED, 'Current PHP version', '7.4')
+    ->addOption('target-php', null, InputOption::VALUE_REQUIRED, 'Target PHP version', '8.1')
+    ->addOption('additional-paths', 'a', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Additional paths to scan')
+    ->addOption('exclude', 'e', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Patterns to exclude')
+    ->addOption('check-server', 's', InputOption::VALUE_NONE, 'Analyze server configuration')
+    ->addOption('server-config-path', null, InputOption::VALUE_REQUIRED, 'Path to server config file (.htaccess)')
+    ->addOption('server-from', null, InputOption::VALUE_REQUIRED, 'Source server type (apache22, apache24, nginx)', 'apache22')
+    ->addOption('server-to', null, InputOption::VALUE_REQUIRED, 'Target server type (apache24, nginx, frankenphp)', 'apache24')
+    ->addOption('detect-plugins', null, InputOption::VALUE_NONE, 'Detect custom plugins/modules')
+    ->addOption('check-dependencies', null, InputOption::VALUE_NONE, 'Check composer dependencies')
+    ->addOption('estimate-effort', null, InputOption::VALUE_NONE, 'Estimate migration effort')
+    ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Report format (html, markdown, text, json)', 'html')
+    ->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Output file path')
+    ->addOption('project-name', null, InputOption::VALUE_REQUIRED, 'Project name', 'My Project')
+    ->setCode(function (InputInterface $input, OutputInterface $output) {
+        $output->writeln('<info>PHP Migration Analyzer v1.0.0</info>');
+        $output->writeln('');
+
+        try {
+            // Initialize application
+            $app = new Application();
+
+            // Prepare options
+            $options = [
+                'path' => realpath($input->getArgument('path')),
+                'platform' => $input->getOption('platform'),
+                'current_platform_version' => $input->getOption('current-platform') ?? 'unknown',
+                'target_platform_version' => $input->getOption('target-platform') ?? 'unknown',
+                'current_php' => $input->getOption('current-php'),
+                'target_php' => $input->getOption('target-php'),
+                'additional_paths' => $input->getOption('additional-paths'),
+                'exclude_patterns' => $input->getOption('exclude'),
+                'check_server' => $input->getOption('check-server'),
+                'server_config_path' => $input->getOption('server-config-path'),
+                'server_from' => $input->getOption('server-from'),
+                'server_to' => $input->getOption('server-to'),
+                'detect_plugins' => $input->getOption('detect-plugins'),
+                'check_dependencies' => $input->getOption('check-dependencies'),
+                'estimate_effort' => $input->getOption('estimate-effort'),
+                'project_name' => $input->getOption('project-name'),
+            ];
+
+            // Validate path
+            if (!$options['path'] || !is_dir($options['path'])) {
+                $output->writeln('<error>Error: Invalid path specified</error>');
+                return Command::FAILURE;
+            }
+
+            $output->writeln("<info>Analyzing: {$options['path']}</info>");
+            $output->writeln("<info>Platform: {$options['platform']}</info>");
+            $output->writeln("<info>PHP: {$options['current_php']} → {$options['target_php']}</info>");
+            $output->writeln('');
+
+            // Run analysis
+            $output->writeln('<comment>Running analysis...</comment>');
+            $results = $app->analyze($options);
+
+            // Generate report
+            $format = $input->getOption('format');
+            $output->writeln("<comment>Generating {$format} report...</comment>");
+            $report = $app->generateReport($results, $format);
+
+            // Save or display report
+            $outputPath = $input->getOption('output');
+
+            if ($outputPath) {
+                file_put_contents($outputPath, $report);
+                $output->writeln('');
+                $output->writeln("<info>✓ Report saved to: {$outputPath}</info>");
+            } else {
+                if ($format === 'json' || $format === 'text' || $format === 'markdown') {
+                    $output->writeln('');
+                    $output->writeln('<comment>=== REPORT ===</comment>');
+                    $output->writeln($report);
+                } else {
+                    // For HTML, save to temp file and show path
+                    $tempPath = sys_get_temp_dir() . '/migration-report-' . $results['scan_id'] . '.html';
+                    file_put_contents($tempPath, $report);
+                    $output->writeln('');
+                    $output->writeln("<info>✓ HTML report generated: {$tempPath}</info>");
+                }
+            }
+
+            // Show summary
+            $output->writeln('');
+            $output->writeln('<info>=== SUMMARY ===</info>');
+            $output->writeln("Files analyzed: {$results['files']['total']}");
+            $output->writeln("Issues found: {$results['summary']['total_issues']}");
+
+            foreach ($results['summary']['by_severity'] as $severity => $count) {
+                if ($count > 0) {
+                    $color = $this->getSeverityColor($severity);
+                    $output->writeln("  <{$color}>{$severity}: {$count}</{$color}>");
+                }
+            }
+
+            if ($results['effort_estimation'] > 0) {
+                $output->writeln('');
+                $output->writeln("<info>Estimated effort: {$results['effort_estimation']} hours</info>");
+            }
+
+            $output->writeln('');
+            $output->writeln('<info>✓ Analysis complete!</info>');
+
+            return Command::SUCCESS;
+
+        } catch (\Exception $e) {
+            $output->writeln('');
+            $output->writeln('<error>Error: ' . $e->getMessage() . '</error>');
+
+            if ($input->getOption('verbose')) {
+                $output->writeln('<error>' . $e->getTraceAsString() . '</error>');
+            }
+
+            return Command::FAILURE;
+        }
+    })
+    ->run();
+
+/**
+ * Get color tag for severity
+ */
+function getSeverityColor(string $severity): string
+{
+    $colors = [
+        'critical' => 'error',
+        'high' => 'error',
+        'medium' => 'comment',
+        'low' => 'info',
+        'info' => 'info',
+    ];
+
+    return $colors[$severity] ?? 'info';
+}

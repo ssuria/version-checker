@@ -1,0 +1,30 @@
+{
+    "name": "php-migration-analyzer/analyzer",
+    "description": "Analyze PHP code compatibility across versions and CMS platforms (Moodle, WordPress, Magento, PrestaShop, Symfony, Laravel)",
+    "type": "project",
+    "license": "MIT",
+    "keywords": ["php", "migration", "analyzer", "compatibility", "moodle", "wordpress", "magento", "prestashop", "symfony", "laravel"],
+    "authors": [
+        {
+            "name": "PHP Migration Analyzer",
+            "email": "info@phpmigrationanalyzer.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "nikic/php-parser": "^4.15",
+        "guzzlehttp/guzzle": "^7.5",
+        "symfony/console": "^5.4",
+        "symfony/finder": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpMigrationAnalyzer\\": "src/"
+        }
+    },
+    "bin": ["bin/analyze"],
+    "scripts": {
+        "test": "echo 'No tests configured yet'",
+        "analyze": "php bin/analyze"
+    }
+}

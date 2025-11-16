@@ -1,0 +1,42 @@
+{
+  "functions": [
+    {
+      "function": "Mage::run",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "Still used but consider OpenMage for PHP 8+ support",
+      "severity": "info",
+      "regex": "Mage::run\\s*\\("
+    },
+    {
+      "function": "mysql_",
+      "deprecated_since": "5.5",
+      "removed_in": "7.0",
+      "replacement": "Use mysqli_ or PDO",
+      "severity": "critical",
+      "regex": "mysql_\\w+\\s*\\(",
+      "example_old": "mysql_query($sql)",
+      "example_new": "$conn->query($sql) or use PDO"
+    },
+    {
+      "function": "ereg",
+      "deprecated_since": "5.3",
+      "removed_in": "7.0",
+      "replacement": "Use preg_match()",
+      "severity": "critical",
+      "regex": "\\bereg\\s*\\(|\\beregi\\s*\\(",
+      "example_old": "ereg($pattern, $string)",
+      "example_new": "preg_match('/' . $pattern . '/', $string)"
+    },
+    {
+      "function": "split",
+      "deprecated_since": "5.3",
+      "removed_in": "7.0",
+      "replacement": "Use explode() or preg_split()",
+      "severity": "critical",
+      "regex": "\\bsplit\\s*\\(",
+      "example_old": "split(',', $string)",
+      "example_new": "explode(',', $string)"
+    }
+  ]
+}

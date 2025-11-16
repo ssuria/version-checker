@@ -1,0 +1,189 @@
+{
+  "functions": [
+    {
+      "function": "get_context_instance",
+      "deprecated_since": "2.6",
+      "removed_in": "4.0",
+      "replacement": "context::instance_by_id() or specific context class",
+      "severity": "critical",
+      "regex": "get_context_instance\\s*\\(",
+      "example_old": "$context = get_context_instance(CONTEXT_COURSE, $id);",
+      "example_new": "$context = context_course::instance($id);"
+    },
+    {
+      "function": "add_to_log",
+      "deprecated_since": "2.7",
+      "removed_in": "3.6",
+      "replacement": "New events API with \\core\\event\\* classes",
+      "severity": "critical",
+      "regex": "add_to_log\\s*\\(",
+      "example_old": "add_to_log($course->id, 'course', 'view', ...);",
+      "example_new": "$event = \\core\\event\\course_viewed::create($data); $event->trigger();"
+    },
+    {
+      "function": "print_error",
+      "deprecated_since": "2.0",
+      "removed_in": null,
+      "replacement": "throw new moodle_exception()",
+      "severity": "high",
+      "regex": "print_error\\s*\\(",
+      "example_old": "print_error('error_message', 'mod_quiz');",
+      "example_new": "throw new moodle_exception('error_message', 'mod_quiz');"
+    },
+    {
+      "function": "has_capability_in_accessdata",
+      "deprecated_since": "2.2",
+      "removed_in": "3.6",
+      "replacement": "has_capability()",
+      "severity": "high",
+      "regex": "has_capability_in_accessdata\\s*\\("
+    },
+    {
+      "function": "get_course_section",
+      "deprecated_since": "3.3",
+      "removed_in": null,
+      "replacement": "get_fast_modinfo()->get_section_info()",
+      "severity": "medium",
+      "regex": "get_course_section\\s*\\(",
+      "example_old": "$section = get_course_section($section, $courseid);",
+      "example_new": "$modinfo = get_fast_modinfo($courseid); $section = $modinfo->get_section_info($section);"
+    },
+    {
+      "function": "groups_get_group_by_idnumber",
+      "deprecated_since": "2.8",
+      "removed_in": null,
+      "replacement": "groups_get_group_by_idnumber() with different parameters",
+      "severity": "medium",
+      "regex": "groups_get_group_by_idnumber\\s*\\([^,)]+\\)"
+    },
+    {
+      "function": "events_get_handlers",
+      "deprecated_since": "2.6",
+      "removed_in": "3.1",
+      "replacement": "New events API",
+      "severity": "critical",
+      "regex": "events_get_handlers\\s*\\("
+    },
+    {
+      "function": "get_roles_with_capability",
+      "deprecated_since": "3.2",
+      "removed_in": null,
+      "replacement": "get_roles_with_cap_in_context()",
+      "severity": "medium",
+      "regex": "get_roles_with_capability\\s*\\(",
+      "example_old": "get_roles_with_capability('mod/forum:viewdiscussion');",
+      "example_new": "get_roles_with_cap_in_context($context, 'mod/forum:viewdiscussion');"
+    },
+    {
+      "function": "error",
+      "deprecated_since": "2.0",
+      "removed_in": "3.6",
+      "replacement": "throw new moodle_exception()",
+      "severity": "critical",
+      "regex": "\\berror\\s*\\(",
+      "example_old": "error('An error occurred');",
+      "example_new": "throw new moodle_exception('error');"
+    },
+    {
+      "function": "get_records_sql_menu",
+      "deprecated_since": "2.0",
+      "removed_in": "3.6",
+      "replacement": "$DB->get_records_sql_menu()",
+      "severity": "critical",
+      "regex": "get_records_sql_menu\\s*\\(",
+      "example_old": "get_records_sql_menu($sql, $params);",
+      "example_new": "$DB->get_records_sql_menu($sql, $params);"
+    },
+    {
+      "function": "optional_param_array",
+      "deprecated_since": "3.11",
+      "removed_in": null,
+      "replacement": "Use type-specific optional_param functions",
+      "severity": "low",
+      "regex": "optional_param_array\\s*\\("
+    },
+    {
+      "function": "clean_param",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "Use PARAM_* constants with optional_param/required_param",
+      "severity": "low",
+      "regex": "clean_param\\s*\\("
+    },
+    {
+      "function": "get_user_preferences",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "get_user_preferences() with explicit user ID",
+      "severity": "low",
+      "regex": "get_user_preferences\\s*\\(\\s*[^,)]+\\s*\\)",
+      "recommendation": "Always pass user ID explicitly"
+    },
+    {
+      "function": "set_config",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "Use set_config() but be aware of caching",
+      "severity": "info",
+      "regex": "set_config\\s*\\(",
+      "recommendation": "Clear caches after config changes in production"
+    },
+    {
+      "function": "execute_sql",
+      "deprecated_since": "2.0",
+      "removed_in": "3.6",
+      "replacement": "$DB->execute()",
+      "severity": "critical",
+      "regex": "execute_sql\\s*\\(",
+      "example_old": "execute_sql($sql);",
+      "example_new": "$DB->execute($sql, $params);"
+    },
+    {
+      "function": "print_heading",
+      "deprecated_since": "2.0",
+      "removed_in": "3.6",
+      "replacement": "$OUTPUT->heading()",
+      "severity": "critical",
+      "regex": "print_heading\\s*\\(",
+      "example_old": "print_heading('My Heading');",
+      "example_new": "echo $OUTPUT->heading('My Heading');"
+    },
+    {
+      "function": "print_box",
+      "deprecated_since": "2.0",
+      "removed_in": "3.6",
+      "replacement": "$OUTPUT->box()",
+      "severity": "critical",
+      "regex": "print_box\\s*\\(",
+      "example_old": "print_box('Content');",
+      "example_new": "echo $OUTPUT->box('Content');"
+    },
+    {
+      "function": "notify",
+      "deprecated_since": "2.0",
+      "removed_in": "3.6",
+      "replacement": "$OUTPUT->notification() or \\core\\notification::add()",
+      "severity": "critical",
+      "regex": "\\bnotify\\s*\\(",
+      "example_old": "notify('Message');",
+      "example_new": "\\core\\notification::add('Message', \\core\\notification::SUCCESS);"
+    },
+    {
+      "function": "email_to_user",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "email_to_user() but review message format",
+      "severity": "low",
+      "recommendation": "Ensure HTML emails are properly formatted"
+    },
+    {
+      "function": "fullname",
+      "deprecated_since": null,
+      "removed_in": null,
+      "replacement": "fullname() with proper override parameter",
+      "severity": "info",
+      "regex": "fullname\\s*\\(",
+      "recommendation": "Pass $override parameter when needed"
+    }
+  ]
+}
